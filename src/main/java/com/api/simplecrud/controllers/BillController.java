@@ -1,7 +1,9 @@
 package com.api.simplecrud.controllers;
 
 import com.api.simplecrud.models.BillModel;
+import com.api.simplecrud.models.StakeHolder;
 import com.api.simplecrud.services.IBillService;
+import com.api.simplecrud.services.IStakeholderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +14,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/bill")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BillController {
     @Autowired
     private IBillService service;
+    @Autowired
+    private IStakeholderService serviceStakeholder;
 
     @GetMapping
     public List<BillModel> list(){
@@ -31,8 +36,19 @@ public class BillController {
     }
 
     @PostMapping
-    public ResponseEntity<BillModel> create(@RequestBody BillModel billModel){
-        System.out.println(billModel);
+    public ResponseEntity<BillModel> create(@RequestBody BillModel billModel, @RequestParam Long issuing, @RequestParam Long receiver){
+        System.out.println(billModel.toString());
+        Optional<StakeHolder> issuingEntity= serviceStakeholder.getStakeHolderById(issuing);
+        Optional<StakeHolder> receiverEntity= serviceStakeholder.getStakeHolderById(receiver);
+        if(issuingEntity.isPresent() && receiverEntity.isPresent()){
+            StakeHolder issuingM = issuingEntity.get();
+            StakeHolder receiverM = receiverEntity.get();
+            billModel.setIssuing(issuingM);
+            billModel.setReceiver(receiverM);
+            System.out.println(issuingM.toString());
+
+        }
+        System.out.println(billModel.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(billModel));
     }
 

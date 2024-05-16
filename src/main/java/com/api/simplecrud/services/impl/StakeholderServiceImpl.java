@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StakeholderServiceImpl implements IStakeholderService {
@@ -17,5 +18,10 @@ public class StakeholderServiceImpl implements IStakeholderService {
     @Override
     public List<StakeHolder> getAllStakeholders(String type) {
         return stakeholderRepository.findAllByType(type);
+    }
+
+    @Override
+    public Optional<StakeHolder> getStakeHolderById(Long id) {
+        return stakeholderRepository.findById(id);
     }
 }
