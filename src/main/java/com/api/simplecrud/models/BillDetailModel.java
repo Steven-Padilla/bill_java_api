@@ -17,7 +17,7 @@ public class BillDetailModel {
     @Column
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private Long details_id;
 
     @Column
