@@ -29,11 +29,11 @@ public class BillModel {
     @Column(nullable = false)
     private double total;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "receiver_id", referencedColumnName = "id")
     private StakeHolder receiver;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "issuing_id", referencedColumnName = "id")
     private StakeHolder issuing;
 

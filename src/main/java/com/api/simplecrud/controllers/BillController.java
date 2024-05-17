@@ -57,7 +57,7 @@ public class BillController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(billModel));
     }
 
-    @GetMapping("delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         Optional<BillModel> singleBill = service.delete(id);
         if(singleBill.isPresent()){
