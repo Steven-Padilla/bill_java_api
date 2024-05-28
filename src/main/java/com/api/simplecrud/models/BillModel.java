@@ -1,10 +1,7 @@
 package com.api.simplecrud.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -14,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "bills")
 public class BillModel {
     @Id
@@ -31,11 +29,11 @@ public class BillModel {
     @Column(nullable = false)
     private double total;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "receiver_id", referencedColumnName = "id")
     private StakeHolder receiver;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "issuing_id", referencedColumnName = "id")
     private StakeHolder issuing;
 
